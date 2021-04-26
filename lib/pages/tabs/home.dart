@@ -6,8 +6,11 @@ import 'package:jingdong_app/config/config.dart';
 //轮播图类模型
 import 'package:jingdong_app/model/focusmodel.dart';
 import 'package:jingdong_app/model/productmodel.dart';
-import 'package:jingdong_app/services/screen_adaper.dart';
+import 'package:jingdong_app/services/screen_adapter.dart';
+import 'package:jingdong_app/services/search_services.dart';
 import 'dart:convert';
+
+import 'package:jingdong_app/widget/loadingwidget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -16,16 +19,24 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+//部分页面需要保持状态方法,自动保持活着的客户端混合
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   List _foucusData = [];
   List _hotProductList = [];
   List _bestProductList = [];
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     super.initState();
     _getFocusData();
     _getHotProductData();
     _getBestProductData();
+
     //  // var mapData = {"name": "张三", "age": "20"}; //Json 字符串转化成 Map 类型
     //   var strData = '{"name":"张三","age":"20"}';
     //   var result = json.decode(strData); //Map 转换成 Json 字符串
@@ -107,24 +118,24 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     } else {
-      return Text("加载中");
+      return LoadingWidget();
     }
   }
 
   Widget _titleWidget(value) {
     return Container(
-      height: ScreenAdaper.height(46),
+      height: ScreenAdapter.height(46),
       margin: EdgeInsets.only(
-        left: ScreenAdaper.width(20),
+        left: ScreenAdapter.width(20),
       ),
       padding: EdgeInsets.only(
-        left: ScreenAdaper.width(20),
+        left: ScreenAdapter.width(20),
       ),
       decoration: BoxDecoration(
           border: Border(
               left: BorderSide(
         color: Colors.red,
-        width: ScreenAdaper.width(10),
+        width: ScreenAdapter.width(10),
       ))),
       child: Text(
         value,
@@ -137,8 +148,8 @@ class _HomePageState extends State<HomePage> {
   Widget _hotProductListWidget() {
     if (this._hotProductList.length > 0) {
       return Container(
-        padding: EdgeInsets.all(ScreenAdaper.width(20)),
-        height: ScreenAdaper.height(240),
+        padding: EdgeInsets.all(ScreenAdapter.width(20)),
+        height: ScreenAdapter.height(240),
         //width: double.infinity,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -150,17 +161,17 @@ class _HomePageState extends State<HomePage> {
             return Column(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(right: ScreenAdaper.width(20)),
-                  height: ScreenAdaper.height(160),
-                  width: ScreenAdaper.width(180),
+                  margin: EdgeInsets.only(right: ScreenAdapter.width(20)),
+                  height: ScreenAdapter.height(160),
+                  width: ScreenAdapter.width(180),
                   child: Image.network(
                     sPic,
                     fit: BoxFit.cover,
                   ),
                 ),
                 Container(
-                    padding: EdgeInsets.only(top: ScreenAdaper.height(10)),
-                    height: ScreenAdaper.height(40),
+                    padding: EdgeInsets.only(top: ScreenAdapter.height(10)),
+                    height: ScreenAdapter.height(40),
                     child: Text(
                       "￥${this._hotProductList[index].price}",
                       style: TextStyle(color: Colors.red),
@@ -172,13 +183,13 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     } else {
-      return Text("加载中");
+      return LoadingWidget();
     }
   }
 
   //热门商品
   Widget _recProductListWidget() {
-    var itemWidth = (ScreenAdaper.screenwidth() - 30) / 2;
+    var itemWidth = (ScreenAdapter.screenwidth() - 30) / 2;
     return Container(
       padding: EdgeInsets.all(10),
       child: Wrap(
@@ -208,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   )),
               Padding(
-                padding: EdgeInsets.only(top: ScreenAdaper.height(20)),
+                padding: EdgeInsets.only(top: ScreenAdapter.height(20)),
                 child: Text(
                   "${value.title}",
                   maxLines: 2,
@@ -217,7 +228,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: ScreenAdaper.height(20)),
+                padding: EdgeInsets.only(top: ScreenAdapter.height(20)),
                 child: Stack(
                   children: <Widget>[
                     Align(
@@ -226,7 +237,7 @@ class _HomePageState extends State<HomePage> {
                         "￥${value.price}",
                         style: TextStyle(
                           color: Colors.red,
-                          fontSize: ScreenAdaper.sp(28),
+                          fontSize: ScreenAdapter.sp(28),
                         ),
                       ),
                     ),
@@ -236,7 +247,7 @@ class _HomePageState extends State<HomePage> {
                         "￥${value.oldPrice}",
                         style: TextStyle(
                           color: Colors.black54,
-                          fontSize: ScreenAdaper.sp(28),
+                          fontSize: ScreenAdapter.sp(28),
                           decoration: TextDecoration.lineThrough,
                         ),
                       ),
@@ -256,10 +267,10 @@ class _HomePageState extends State<HomePage> {
     return ListView(
       children: <Widget>[
         _swiperWidget(),
-        SizedBox(height: ScreenAdaper.height(20)),
+        SizedBox(height: ScreenAdapter.height(20)),
         _titleWidget("猜你喜欢"),
         _hotProductListWidget(),
-        SizedBox(height: ScreenAdaper.height(20)),
+        SizedBox(height: ScreenAdapter.height(20)),
         _titleWidget("热门推荐"),
         _recProductListWidget(),
       ],

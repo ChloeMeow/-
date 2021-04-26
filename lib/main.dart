@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jingdong_app/pages/tabs/tab.dart';
+import 'package:jingdong_app/pages/tabs/tabs.dart';
 import 'package:jingdong_app/routers/router.dart';
 
 void main() {
@@ -25,6 +25,9 @@ class _MyAppState extends State<MyApp> {
         //home: Tabs(),
         initialRoute: '/',
         onGenerateRoute: onGenerateRoute,
+        theme: ThemeData(
+          primaryColor: Colors.white,
+        ),
       ),
     );
   }

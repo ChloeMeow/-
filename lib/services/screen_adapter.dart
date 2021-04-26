@@ -1,7 +1,7 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ScreenAdaper {
+class ScreenAdapter {
   //传入时会把int转换为double
   static height(double value) {
     return ScreenUtil().setHeight(value);

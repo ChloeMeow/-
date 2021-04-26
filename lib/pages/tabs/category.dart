@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jingdong_app/config/config.dart';
 import 'package:jingdong_app/model/catemodel.dart';
-import 'package:jingdong_app/services/screen_adaper.dart';
+import 'package:jingdong_app/services/screen_adapter.dart';
 
 class CategoryPage extends StatefulWidget {
   CategoryPage({Key key}) : super(key: key);
@@ -11,10 +11,15 @@ class CategoryPage extends StatefulWidget {
   _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
+class _CategoryPageState extends State<CategoryPage>
+    with AutomaticKeepAliveClientMixin {
   int _selectIndex = 0;
   List _leftCateList = [];
   List _rightCateList = [];
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     super.initState();
@@ -63,9 +68,9 @@ class _CategoryPageState extends State<CategoryPage> {
                 },
                 child: Container(
                   width: double.infinity,
-                  height: ScreenAdaper.height(84),
+                  height: ScreenAdapter.height(84),
                   padding: EdgeInsets.only(
-                    top: ScreenAdaper.height(24),
+                    top: ScreenAdapter.height(24),
                   ),
                   child: Text(
                     "${this._leftCateList[index].title}",
@@ -110,22 +115,29 @@ class _CategoryPageState extends State<CategoryPage> {
                 String pic = this._rightCateList[index].pic;
                 //网址斜杠转换
                 pic = Config.domain + pic.replaceAll('\\', '/');
-                return Container(
-                  padding: EdgeInsets.all(5),
-                  child: Column(
-                    children: <Widget>[
-                      AspectRatio(
-                        aspectRatio: 1 / 1,
-                        child: Image.network(
-                          "${pic}",
-                          fit: BoxFit.cover,
+                return InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/productList',arguments: {
+                      "cid":this._rightCateList[index].sId,
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    child: Column(
+                      children: <Widget>[
+                        AspectRatio(
+                          aspectRatio: 1 / 1,
+                          child: Image.network(
+                            "${pic}",
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: ScreenAdaper.height(28),
-                        child: Text("${this._rightCateList[index].title}"),
-                      )
-                    ],
+                        Container(
+                          height: ScreenAdapter.height(28),
+                          child: Text("${this._rightCateList[index].title}"),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
@@ -145,17 +157,17 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    //注意用ScreenAdaper必须得在build方法里面初始化
-    //ScreenAdaper.init(context);
+    //注意用ScreenAdapter必须得在build方法里面初始化
+    //ScreenAdapter.init(context);
     //计算左侧Listvew宽度
-    var leftWidth = ScreenAdaper.screenwidth() / 4;
+    var leftWidth = ScreenAdapter.screenwidth() / 4;
     //计算右侧GridView宽高比
     //屏幕宽度-左侧宽度-Gridview外侧原生左右的Padding值-Gridview中间间距
-    var rightItemWidth = (ScreenAdaper.screenwidth() - leftWidth - 20 - 20) / 3;
+    var rightItemWidth = (ScreenAdapter.screenwidth() - leftWidth - 20 - 20) / 3;
 
-    rightItemWidth = ScreenAdaper.width(rightItemWidth);
+    rightItemWidth = ScreenAdapter.width(rightItemWidth);
     //右侧每一项高度等于计算后的值+文本的值
-    var rightItemHeigh = rightItemWidth + ScreenAdaper.height(28);
+    var rightItemHeigh = rightItemWidth + ScreenAdapter.height(28);
     return Row(
       children: <Widget>[
         _leftCateWidget(leftWidth),
