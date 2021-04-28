@@ -100,6 +100,7 @@ class _ProductListPageState extends State<ProductListPage> {
     });
   }
 
+  //获取商品列表的数据
   _getProductListData() async {
     setState(() {
       this.flag = false;

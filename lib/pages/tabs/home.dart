@@ -200,62 +200,68 @@ class _HomePageState extends State<HomePage>
           String sPic = value.sPic;
           //网址斜杠转换
           sPic = Config.domain + sPic.replaceAll('\\', '/');
-          return Container(
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                border: Border.all(
-              color: Colors.black12,
-              width: 1,
-            )),
-            width: itemWidth,
-            child: Column(children: <Widget>[
-              Container(
-                  width: double.infinity,
-                  child: AspectRatio(
-                    aspectRatio: 1 / 1, //防止服务器返回的图片大小不一致导致高度不一致问题
-                    child: Image.network(
-                      "${sPic}",
-                      fit: BoxFit.cover,
-                    ),
-                  )),
-              Padding(
-                padding: EdgeInsets.only(top: ScreenAdapter.height(20)),
-                child: Text(
-                  "${value.title}",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.black54),
+          return InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/productContent',
+                  arguments: {"id": value.sId});
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                color: Colors.black12,
+                width: 1,
+              )),
+              width: itemWidth,
+              child: Column(children: <Widget>[
+                Container(
+                    width: double.infinity,
+                    child: AspectRatio(
+                      aspectRatio: 1 / 1, //防止服务器返回的图片大小不一致导致高度不一致问题
+                      child: Image.network(
+                        "${sPic}",
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                Padding(
+                  padding: EdgeInsets.only(top: ScreenAdapter.height(20)),
+                  child: Text(
+                    "${value.title}",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.black54),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: ScreenAdapter.height(20)),
-                child: Stack(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "￥${value.price}",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: ScreenAdapter.sp(28),
+                Padding(
+                  padding: EdgeInsets.only(top: ScreenAdapter.height(20)),
+                  child: Stack(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "￥${value.price}",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: ScreenAdapter.sp(28),
+                          ),
                         ),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        "￥${value.oldPrice}",
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: ScreenAdapter.sp(28),
-                          decoration: TextDecoration.lineThrough,
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "￥${value.oldPrice}",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: ScreenAdapter.sp(28),
+                            decoration: TextDecoration.lineThrough,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ]),
+                    ],
+                  ),
+                )
+              ]),
+            ),
           );
         }).toList(),
       ),

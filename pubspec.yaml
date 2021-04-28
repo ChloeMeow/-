@@ -32,6 +32,7 @@ dependencies:
   flutter_screenutil:
   dio:
   shared_preferences:
+  flutter_inappbrowser:
 
 dev_dependencies:
   flutter_test:
