@@ -101,6 +101,7 @@ class _ProductContentPageState extends State<ProductContentPage> {
           body: this._productContentList.length>0?Stack(
             children: [
               TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 children: [
                   Commodity(this._productContentList),
                   ProductDetails(this._productContentList),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
 
 class ProductDetails extends StatefulWidget {
   final List _productContentList;
@@ -13,13 +14,15 @@ class _ProductDetailsState extends State<ProductDetails>
     with AutomaticKeepAliveClientMixin {
   double progress = 0;
   var _id;
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => true;  
   @override
   void initState() {
     super.initState();
     print(widget._productContentList[0].sId);
     this._id = widget._productContentList[0].sId;
   }
+
+  // 
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +31,15 @@ class _ProductDetailsState extends State<ProductDetails>
         children: <Widget>[
           Expanded(
             child: InAppWebView(
-              initialUrl: "http://jd.itying.com/pcontent?id=${this._id}",
-              // onProgressChanged:
-              //     (InAppWebViewController controller, int progress) {
-              //       setState(() {
-              //           this.progress = progress/100;
-              //         });
-              //     },
+              initialUrlRequest: URLRequest(
+                url: Uri.parse("http://jd.itying.com/pcontent?id=${this._id}")
+              ),
+              onProgressChanged:
+                  (InAppWebViewController controller, int progress) {
+                    setState(() {
+                        this.progress = progress/100;
+                      });
+                  },
             ),
           ),
         ],

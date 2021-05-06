@@ -4,8 +4,9 @@ class ProductContentModel {
   ProductContentModel({this.result});
 
   ProductContentModel.fromJson(Map<String, dynamic> json) {
-    result =
-        json['result'] != null ? new ProductContentitem.fromJson(json['result']) : null;
+    result = json['result'] != null
+        ? new ProductContentitem.fromJson(json['result'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -100,12 +101,16 @@ class ProductContentitem {
 class Attr {
   String cate;
   List<String> list;
+  //选项里数据类型更改，所以要加此类型
+  List<Map> attrList;
 
   Attr({this.cate, this.list});
 
   Attr.fromJson(Map<String, dynamic> json) {
     cate = json['cate'];
     list = json['list'].cast<String>();
+     //选项里数据类型更改，所以要加此类型,默认为空
+    attrList = [];
   }
 
   Map<String, dynamic> toJson() {

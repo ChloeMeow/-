@@ -13,7 +13,7 @@ class Tabs extends StatefulWidget {
 }
 
 class _TabsState extends State<Tabs> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
   //创建页面控制器
   var _pageController;
   @override
@@ -34,49 +34,9 @@ class _TabsState extends State<Tabs> {
   Widget build(BuildContext context) {
     //索引不等于3
     return Scaffold(
-      appBar: _currentIndex!=3?AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.center_focus_weak,
-            size: 28,
-            color: Colors.black87,
-          ),
-          onPressed: () {},
-        ),
-        title: InkWell(
-          child: Container(
-              height: ScreenAdapter.height(68),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(233, 233, 233, 0.8),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              padding: EdgeInsets.only(left: ScreenAdapter.width(10)),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(Icons.search),
-                  Text(
-                    "笔记本",
-                    style: TextStyle(fontSize: ScreenAdapter.sp(28)),
-                  ),
-                ],
-              )),
-          onTap: () {
-            Navigator.pushNamed(context, '/search');
-          },
-        ),
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.message,
-                size: 28,
-                color: Colors.black87,
-              ),
-              onPressed: () {}),
-        ],
-      ):AppBar(
-        title: Text("用户中心"),
-      ),
+      // appBar: _currentIndex!=3?:AppBar(
+      //   title: Text("用户中心"),
+      // ),
       //body: this._pageList[this._currentIndex],
 
       //切换页面状态,所有页面都保持状态方法

@@ -168,11 +168,55 @@ class _CategoryPageState extends State<CategoryPage>
     rightItemWidth = ScreenAdapter.width(rightItemWidth);
     //右侧每一项高度等于计算后的值+文本的值
     var rightItemHeigh = rightItemWidth + ScreenAdapter.height(28);
-    return Row(
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.center_focus_weak,
+            size: 28,
+            color: Colors.black87,
+          ),
+          onPressed: () {},
+        ),
+        title: InkWell(
+          child: Container(
+              height: ScreenAdapter.height(68),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(233, 233, 233, 0.8),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              padding: EdgeInsets.only(left: ScreenAdapter.width(10)),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.search),
+                  Text(
+                    "笔记本",
+                    style: TextStyle(fontSize: ScreenAdapter.sp(28)),
+                  ),
+                ],
+              )),
+          onTap: () {
+            Navigator.pushNamed(context, '/search');
+          },
+        ),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.message,
+                size: 28,
+                color: Colors.black87,
+              ),
+              onPressed: () {}),
+        ],
+      ),
+      body: Row(
       children: <Widget>[
         _leftCateWidget(leftWidth),
         _rightCateWidget(rightItemWidth, rightItemHeigh),
       ],
+    ),
     );
+    
   }
 }

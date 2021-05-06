@@ -270,16 +270,59 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        _swiperWidget(),
-        SizedBox(height: ScreenAdapter.height(20)),
-        _titleWidget("猜你喜欢"),
-        _hotProductListWidget(),
-        SizedBox(height: ScreenAdapter.height(20)),
-        _titleWidget("热门推荐"),
-        _recProductListWidget(),
-      ],
+    return Scaffold(
+      appBar:AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.center_focus_weak,
+            size: 28,
+            color: Colors.black87,
+          ),
+          onPressed: () {},
+        ),
+        title: InkWell(
+          child: Container(
+              height: ScreenAdapter.height(68),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(233, 233, 233, 0.8),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              padding: EdgeInsets.only(left: ScreenAdapter.width(10)),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.search),
+                  Text(
+                    "笔记本",
+                    style: TextStyle(fontSize: ScreenAdapter.sp(28)),
+                  ),
+                ],
+              )),
+          onTap: () {
+            Navigator.pushNamed(context, '/search');
+          },
+        ),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.message,
+                size: 28,
+                color: Colors.black87,
+              ),
+              onPressed: () {}),
+        ],
+      ),
+      body: ListView(
+        children: <Widget>[
+          _swiperWidget(),
+          SizedBox(height: ScreenAdapter.height(20)),
+          _titleWidget("猜你喜欢"),
+          _hotProductListWidget(),
+          SizedBox(height: ScreenAdapter.height(20)),
+          _titleWidget("热门推荐"),
+          _recProductListWidget(),
+        ],
+      ),
     );
   }
 }

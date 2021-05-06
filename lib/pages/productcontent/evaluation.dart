@@ -7,7 +7,8 @@ class Evaluation extends StatefulWidget {
   _EvaluationState createState() => _EvaluationState();
 }
 
-class _EvaluationState extends State<Evaluation> {
+class _EvaluationState extends State<Evaluation> with AutomaticKeepAliveClientMixin{
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     return Container(
