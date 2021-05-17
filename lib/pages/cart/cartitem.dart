@@ -5,15 +5,26 @@ import 'package:jingdong_app/services/screen_adapter.dart';
 import 'package:provider/provider.dart';
 
 class CartItem extends StatefulWidget {
-  CartItem({Key key}) : super(key: key);
+  Map _itemData;
+
+  CartItem(this._itemData, {Key key}) : super(key: key);
 
   @override
   _CartItemState createState() => _CartItemState();
 }
 
 class _CartItemState extends State<CartItem> {
+  Map _itemData;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this._itemData = widget._itemData;
+  }
+
   @override
   Widget build(BuildContext context) {
+    var cartProvider = Provider.of<CartProvider>(context);
     return Container(
       height: ScreenAdapter.height(200),
       padding: EdgeInsets.all(5),
@@ -24,15 +35,22 @@ class _CartItemState extends State<CartItem> {
           Container(
             width: ScreenAdapter.width(60),
             child: Checkbox(
-              value: true,
-              onChanged: (value) {},
+              value: _itemData['checked'],
+              onChanged: (value) {
+                setState(() {
+                  //取反
+                  _itemData['checked'] = !_itemData['checked'];
+                });
+
+                cartProvider.itemChage();
+              },
               activeColor: Colors.pink,
             ),
           ),
           Container(
             width: ScreenAdapter.width(165),
             child: Image.network(
-              'https://www.itying.com/images/flutter/list3.jpg',
+              '${_itemData['pic']}',
               fit: BoxFit.cover,
             ),
           ),
@@ -42,22 +60,27 @@ class _CartItemState extends State<CartItem> {
                 padding: EdgeInsets.all(10),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        '${_itemData['title']}',
                         maxLines: 2,
+                      ),
+                      Text(
+                        '${_itemData['selectedAttr']}',
+                        maxLines: 1,
                       ),
                       Stack(children: <Widget>[
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            '￥12',
+                            '￥${_itemData['price']}',
                             style: TextStyle(color: Colors.red),
                           ),
                         ),
                         Align(
                           alignment: Alignment.centerRight,
-                          child: CartNum(),
+                          child: CartNum(_itemData),
                         )
                       ])
                     ]),

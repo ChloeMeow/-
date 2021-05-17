@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:jingdong_app/config/config.dart';
 import 'package:jingdong_app/model/productcontentmodel.dart';
+import 'package:jingdong_app/pages/productcontent/cartnum.dart';
+import 'package:jingdong_app/provider/cartprovider.dart';
+import 'package:jingdong_app/services/cart_services.dart';
+import 'package:jingdong_app/services/eventbus.dart';
 import 'package:jingdong_app/services/screen_adapter.dart';
 import 'package:jingdong_app/widget/jdbutton.dart';
+import 'package:provider/provider.dart';
 
 class Commodity extends StatefulWidget {
   final List _productContentList;
@@ -18,6 +23,10 @@ class _CommodityState extends State<Commodity>
   bool get wantKeepAlive => true;
   List _attr = [];
   String _selectedValue;
+  var cartProvider;
+
+  //取消监听
+  var actionEventBus;
   @override
   void initState() {
     super.initState();
@@ -26,6 +35,22 @@ class _CommodityState extends State<Commodity>
     this._attr = this._productContent.attr;
     print(this._attr);
     _initAttr();
+    //监听所有广播
+    // eventBus.on().listen((event) {
+    //   print(event);
+    //   this._attrBotomSheet();
+    // });
+    //只监听一个ProductContentEvent广播
+    this.actionEventBus = eventBus.on<ProductContentEvent>().listen((event) {
+      print(event);
+      this._attrBotomSheet();
+    });
+  }
+
+  //销毁
+  void dispose() {
+    super.dispose();
+    this.actionEventBus.cancel(); //取消事件监听
   }
 
   //初始化Attr 格式化数据
@@ -91,6 +116,8 @@ class _CommodityState extends State<Commodity>
     setState(() {
       //把数组转换为字符串
       this._selectedValue = tempArr.join(',');
+      //给筛选属性赋值
+      this._productContent.selectedAttr = this._selectedValue;
     });
   }
 
@@ -167,7 +194,31 @@ class _CommodityState extends State<Commodity>
                           Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               //存入底部状态
-                              children: _getAttrWidget(setBottomState))
+                              children: _getAttrWidget(setBottomState)),
+                          Divider(),
+                          Container(
+                            margin:
+                                EdgeInsets.only(top: ScreenAdapter.height(10)),
+                            height: ScreenAdapter.height(80),
+                            child: InkWell(
+                              onTap: () {
+                                _attrBotomSheet();
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "数量",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    width: ScreenAdapter.width(20),
+                                  ),
+                                  CartNum(this._productContent),
+                                ],
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -188,8 +239,15 @@ class _CommodityState extends State<Commodity>
                                 child: JdButton(
                                   color: Color.fromRGBO(255, 1, 0, 0.9),
                                   text: "加入购物车",
-                                  cd: () {
-                                    print("加入购物车");
+                                  cd: () async {
+                                    //等待数据加入购物车以后再通知其他页面更新数据
+                                    // print("加入购物车");
+                                    await CartServices.addCart(
+                                        this._productContent);
+                                    //关闭底部筛选属性
+                                    Navigator.of(context).pop();
+                                    //调用Provider更新数据
+                                    this.cartProvider.updateCartList();
                                   },
                                 ),
                               )),
@@ -205,7 +263,7 @@ class _CommodityState extends State<Commodity>
                                   color: Color.fromRGBO(255, 165, 0, 0.9),
                                   text: "立即购买",
                                   cd: () {
-                                    print("加入购物车");
+                                    print("立即购买");
                                   },
                                 ),
                               )),
@@ -222,6 +280,7 @@ class _CommodityState extends State<Commodity>
 
   @override
   Widget build(BuildContext context) {
+    this.cartProvider = Provider.of<CartProvider>(context);
     //处理图片
     String pic = this._productContent.pic;
     //网址斜杠转换

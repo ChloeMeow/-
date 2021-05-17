@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:jingdong_app/model/productcontentmodel.dart';
 import 'package:jingdong_app/provider/cartprovider.dart';
 import 'package:jingdong_app/services/screen_adapter.dart';
 import 'package:provider/provider.dart';
 
 class CartNum extends StatefulWidget {
-  Map _itemData;
-  var cartProvider;
-  CartNum(this._itemData, {Key key}) : super(key: key);
+  ProductContentitem _productContent;
+  CartNum(this._productContent, {Key key}) : super(key: key);
 
   @override
   _CartNumState createState() => _CartNumState();
 }
 
 class _CartNumState extends State<CartNum> {
-  Map _itemData;
-  var cartProvider;
+  ProductContentitem _productContent;
   @override
   void initState() {
-    this._itemData = widget._itemData;
+    super.initState();
+    this._productContent = widget._productContent;
   }
 
   //左侧按钮
   Widget _leftBtn() {
     return InkWell(
       onTap: () {
-        setState(() {
-          if (_itemData['count'] > 1) {
-            _itemData['count']--;
-          }
+        if(this._productContent.count>1){
+          setState(() {
+          this._productContent.count = this._productContent.count - 1;
         });
-        this.cartProvider.changeItemCount();
+        }
       },
       child: Container(
         alignment: Alignment.center,
@@ -45,9 +44,8 @@ class _CartNumState extends State<CartNum> {
     return InkWell(
       onTap: () {
         setState(() {
-          _itemData['count']++;
+          this._productContent.count = this._productContent.count + 1;
         });
-        this.cartProvider.itemCountchange();
       },
       child: Container(
         alignment: Alignment.center,
@@ -69,13 +67,12 @@ class _CartNumState extends State<CartNum> {
       )),
       width: ScreenAdapter.width(65),
       height: ScreenAdapter.height(45),
-      child: Text('${_itemData['count']}'),
+      child: Text('${this._productContent.count}'),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    this.cartProvider = Provider.of<CartProvider>(context);
     return Container(
       width: ScreenAdapter.width(160),
       decoration:

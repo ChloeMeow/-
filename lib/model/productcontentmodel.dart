@@ -34,23 +34,30 @@ class ProductContentitem {
   List<Attr> attr;
   String subTitle;
   Object salecount;
+  //新增属性
+  int count;
+  String selectedAttr;
 
-  ProductContentitem(
-      {this.sId,
-      this.title,
-      this.cid,
-      this.price,
-      this.oldPrice,
-      this.isBest,
-      this.isHot,
-      this.isNew,
-      this.status,
-      this.pic,
-      this.content,
-      this.cname,
-      this.attr,
-      this.subTitle,
-      this.salecount});
+  ProductContentitem({
+    this.sId,
+    this.title,
+    this.cid,
+    this.price,
+    this.oldPrice,
+    this.isBest,
+    this.isHot,
+    this.isNew,
+    this.status,
+    this.pic,
+    this.content,
+    this.cname,
+    this.attr,
+    this.subTitle,
+    this.salecount,
+    //新增属性
+    this.count,
+    this.selectedAttr,
+  });
 
   ProductContentitem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -73,6 +80,9 @@ class ProductContentitem {
     }
     subTitle = json['sub_title'];
     salecount = json['salecount'];
+    //新增
+    count = 1;
+    selectedAttr = '';
   }
 
   Map<String, dynamic> toJson() {
@@ -109,7 +119,7 @@ class Attr {
   Attr.fromJson(Map<String, dynamic> json) {
     cate = json['cate'];
     list = json['list'].cast<String>();
-     //选项里数据类型更改，所以要加此类型,默认为空
+    //选项里数据类型更改，所以要加此类型,默认为空
     attrList = [];
   }
 

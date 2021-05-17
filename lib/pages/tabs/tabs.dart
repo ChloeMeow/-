@@ -13,7 +13,7 @@ class Tabs extends StatefulWidget {
 }
 
 class _TabsState extends State<Tabs> {
-  int _currentIndex = 2;
+  int _currentIndex = 0;
   //创建页面控制器
   var _pageController;
   @override
@@ -73,15 +73,15 @@ class _TabsState extends State<Tabs> {
             label: "首页",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.category),
             label: "分类",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.shopping_cart),
             label: "购物车",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.people),
             label: "我的",
           ),
         ],
