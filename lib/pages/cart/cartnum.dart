@@ -15,10 +15,6 @@ class CartNum extends StatefulWidget {
 class _CartNumState extends State<CartNum> {
   Map _itemData;
   var cartProvider;
-  @override
-  void initState() {
-    this._itemData = widget._itemData;
-  }
 
   //左侧按钮
   Widget _leftBtn() {
@@ -64,8 +60,8 @@ class _CartNumState extends State<CartNum> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
           border: Border(
-        left: BorderSide(width: 1, color: Colors.black12),
-        right: BorderSide(width: 1, color: Colors.black12),
+        left: BorderSide(width:ScreenAdapter.width(2), color: Colors.black12),
+        right: BorderSide(width: ScreenAdapter.width(2), color: Colors.black12),
       )),
       width: ScreenAdapter.width(65),
       height: ScreenAdapter.height(45),
@@ -75,11 +71,14 @@ class _CartNumState extends State<CartNum> {
 
   @override
   Widget build(BuildContext context) {
+    //注意：给属性赋值，
+    //一次赋值在init里，值需要重新改变重新赋值就放这里，
+    this._itemData = widget._itemData;
     this.cartProvider = Provider.of<CartProvider>(context);
     return Container(
-      width: ScreenAdapter.width(160),
+      width: ScreenAdapter.width(168),
       decoration:
-          BoxDecoration(border: Border.all(width: 1, color: Colors.black12)),
+          BoxDecoration(border: Border.all(width: ScreenAdapter.width(2), color: Colors.black12)),
       child: Row(
         children: [
           _leftBtn(),

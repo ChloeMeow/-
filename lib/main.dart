@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
         builder: () => MaterialApp(
           debugShowCheckedModeBanner: false,
           //home: Tabs(),
-          initialRoute: '/',
+          initialRoute: '/login',
           onGenerateRoute: onGenerateRoute,
           theme: ThemeData(
             primaryColor: Colors.white,

@@ -126,7 +126,7 @@ class _SearchPageState extends State<SearchPage> {
               borderRadius: BorderRadius.circular(30),
             ),
             child: TextField(
-              autofocus: false,
+              autofocus: true,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                 borderSide: BorderSide.none,

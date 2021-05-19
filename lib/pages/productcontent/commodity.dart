@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jingdong_app/config/config.dart';
 import 'package:jingdong_app/model/productcontentmodel.dart';
 import 'package:jingdong_app/pages/productcontent/cartnum.dart';
@@ -60,6 +61,7 @@ class _CommodityState extends State<Commodity>
     print('-------------111111-------------');
     //print(attr);
     for (var i = 0; i < attr.length; i++) {
+      attr[i].attrList.clear;//清空数组里面的数据
       //print(attr[i].cate);
       //print(attr[i].list);
       for (var j = 0; j < attr[i].list.length; j++) {
@@ -159,7 +161,11 @@ class _CommodityState extends State<Commodity>
             _changeAttr(attrItem.cate, item['title'], setBottomState);
           },
           child: Chip(
-            label: Text("${item['title']}"),
+            label: Text(
+              "${item['title']}",
+              style: TextStyle(
+                  color: item['checked'] ? Colors.white : Colors.black54),
+            ),
             padding: EdgeInsets.all(10),
             backgroundColor: item['checked'] ? Colors.red : Colors.black26,
           ),
@@ -178,8 +184,8 @@ class _CommodityState extends State<Commodity>
           return StatefulBuilder(
             builder: (BuildContext context, setBottomState) {
               return GestureDetector(
+                //解决showModalBottomSheet点击消失的问题
                 behavior: HitTestBehavior.opaque,
-                //解决点击消失的问题
                 onTap: () {
                   return false;
                   //点击收回
@@ -200,23 +206,18 @@ class _CommodityState extends State<Commodity>
                             margin:
                                 EdgeInsets.only(top: ScreenAdapter.height(10)),
                             height: ScreenAdapter.height(80),
-                            child: InkWell(
-                              onTap: () {
-                                _attrBotomSheet();
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "数量",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    width: ScreenAdapter.width(20),
-                                  ),
-                                  CartNum(this._productContent),
-                                ],
-                              ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "数量",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: ScreenAdapter.width(20),
+                                ),
+                                CartNum(this._productContent),
+                              ],
                             ),
                           )
                         ],
@@ -248,6 +249,11 @@ class _CommodityState extends State<Commodity>
                                     Navigator.of(context).pop();
                                     //调用Provider更新数据
                                     this.cartProvider.updateCartList();
+                                    Fluttertoast.showToast(
+                                      msg: '加入购物车成功',
+                                      gravity: ToastGravity.CENTER,
+                                      toastLength: Toast.LENGTH_SHORT,
+                                    );
                                   },
                                 ),
                               )),

@@ -14,14 +14,31 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  //结算/取消选择开关
+  bool _isEdit = false;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    
     // var counterProvider = Provider.of<Counter>(context);
     var cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("购物车"),
-        actions: [IconButton(icon: Icon(Icons.launch), onPressed: () {})],
+        actions: <Widget>[
+          FlatButton(
+              child: Text('管理'),
+              onPressed: () {
+                setState(() {
+                  //取反
+                  this._isEdit = !this._isEdit;
+                });
+              })
+        ],
       ),
       body: cartProvider.cartList.length > 0
           ? Stack(children: <Widget>[
@@ -60,30 +77,48 @@ class _CartPageState extends State<CartPage> {
                           ),
                           Text('全选'),
                           SizedBox(width: 20),
-                          Text('合计：'),
-                          Text(
-                            '${cartProvider.allPrice}',
-                            style: TextStyle(
-                              fontSize: ScreenAdapter.sp(28),
-                              color: Colors.red
-                            ),
-                          )
+                          this._isEdit == false ? Text('合计：') : Text(''),
+                          this._isEdit == false
+                              ? Text(
+                                  '${cartProvider.allPrice}',
+                                  style: TextStyle(
+                                      fontSize: ScreenAdapter.sp(28),
+                                      color: Colors.red),
+                                )
+                              : Text('')
                         ]),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: InkWell(
-                          onTap: () {},
-                          child: RaisedButton(
-                            onPressed: () {},
-                            color: Colors.red,
-                            child: Text('结算',
-                                style: TextStyle(
-                                    fontSize: ScreenAdapter.sp(28),
-                                    color: Colors.white)),
-                          ),
-                        ),
-                      )
+                      this._isEdit == false
+                          ? Align(
+                              alignment: Alignment.centerRight,
+                              child: InkWell(
+                                onTap: () {},
+                                child: RaisedButton(
+                                  onPressed: () {},
+                                  color: Colors.red,
+                                  child: Text('结算',
+                                      style: TextStyle(
+                                          fontSize: ScreenAdapter.sp(28),
+                                          color: Colors.white)),
+                                ),
+                              ),
+                            )
+                          : Align(
+                              alignment: Alignment.centerRight,
+                              child: InkWell(
+                                onTap: () {},
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    cartProvider.removeItem();
+                                  },
+                                  color: Colors.red,
+                                  child: Text('删除',
+                                      style: TextStyle(
+                                          fontSize: ScreenAdapter.sp(28),
+                                          color: Colors.white)),
+                                ),
+                              ),
+                            )
                     ]),
                   ))
             ])

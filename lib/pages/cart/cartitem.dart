@@ -15,18 +15,15 @@ class CartItem extends StatefulWidget {
 
 class _CartItemState extends State<CartItem> {
   Map _itemData;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    this._itemData = widget._itemData;
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
+    //给属性赋值
+    this._itemData = widget._itemData;
     var cartProvider = Provider.of<CartProvider>(context);
     return Container(
-      height: ScreenAdapter.height(200),
+      height: ScreenAdapter.height(220),
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
           border: Border(bottom: BorderSide(width: 1, color: Colors.black12))),

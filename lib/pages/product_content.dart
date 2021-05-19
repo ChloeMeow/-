@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jingdong_app/config/config.dart';
 import 'package:jingdong_app/model/productcontentmodel.dart';
 import 'package:jingdong_app/pages/productcontent/commodity.dart';
@@ -130,15 +131,25 @@ class _ProductContentPageState extends State<ProductContentPage> {
                               color: Colors.white),
                           child: Row(
                             children: [
-                              Container(
-                                padding: EdgeInsets.only(
-                                    top: ScreenAdapter.height(5)),
-                                width: ScreenAdapter.width(120),
-                                height: ScreenAdapter.width(100),
-                                child: Column(children: <Widget>[
-                                  Icon(Icons.shopping_cart),
-                                  Text("购物车"),
-                                ]),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/cart');
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      top: ScreenAdapter.height(4)),
+                                  width: ScreenAdapter.width(100),
+                                  height: ScreenAdapter.width(84),
+                                  child: Column(children: <Widget>[
+                                    Icon(Icons.shopping_cart,size: ScreenAdapter.sp(36),),
+                                    Text(
+                                      "购物车",
+                                      style: TextStyle(
+                                        fontSize: ScreenAdapter.sp(22)
+                                      ),
+                                    ),
+                                  ]),
+                                ),
                               ),
                               Expanded(
                                   flex: 1,
@@ -157,10 +168,14 @@ class _ProductContentPageState extends State<ProductContentPage> {
                                       } else {
                                         //等待数据加入购物车以后再通知其他页面更新数据
                                         // print("加入购物车");
-                                        await CartServices.addCart(
-                                            this._productContentList[0]);
+                                        await CartServices.addCart(this._productContentList[0]);
                                         //调用Provider更新数据
                                         cartProvider.updateCartList();
+                                        Fluttertoast.showToast(
+                                          msg: '加入购物车成功',
+                                          gravity: ToastGravity.CENTER,
+                                          toastLength: Toast.LENGTH_SHORT,
+                                        );
                                       }
                                     },
                                   )),

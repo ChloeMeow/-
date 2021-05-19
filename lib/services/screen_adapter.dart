@@ -20,5 +20,6 @@ class ScreenAdapter {
     return ScreenUtil().screenHeight;
   }
 
+
   static void init(BuildContext context) {}
 }

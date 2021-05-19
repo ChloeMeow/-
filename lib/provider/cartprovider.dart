@@ -104,4 +104,27 @@ class CartProvider with ChangeNotifier {
     this._allPrice = tempAllPrice;
     notifyListeners();
   }
+
+  //删除数据
+  removeItem() {
+    //错误都写法
+    // for (var i = 0; i < this._cartList.length; i++) {
+    //   //假如选择有一个等于false,就返回false
+    //   if (this._cartList[i]['checked'] == true) {
+    //     this._cartList.remove(i);
+    //   }
+    // }
+    List tempList = [];
+    for (var i = 0; i < this._cartList.length; i++) {
+      if (this._cartList[i]['checked'] == false) {
+        //获取到没有勾选的数据
+        tempList.add(this._cartList[i]);
+      }
+    }
+    this._cartList = tempList;
+    //计算总价
+    this.computeAllPrice();
+    Storage.setString('cartList', json.encode(this._cartList));
+    notifyListeners();
+  }
 }
