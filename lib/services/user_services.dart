@@ -6,12 +6,12 @@ class UserServices {
   static getUserInfo() async {
     List userinfo;
     try {
-      if (){
-
-      }else{
-        List userInfoData = json.decode(await Storage.getString('userInfo'));
-        userinfo = userInfoData;
+      List userInfoData = json.decode(await Storage.getString('userInfo'));
+      
+      if (!(userInfoData is List)){
+        userInfoData = [];
       }
+      userinfo = userInfoData;
     } catch (e) {
       userinfo = [];
     }
