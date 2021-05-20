@@ -156,7 +156,7 @@ class _ProductContentPageState extends State<ProductContentPage> {
                                   child: JdButton(
                                     color: Color.fromRGBO(255, 1, 0, 0.9),
                                     text: "加入购物车",
-                                    cd: () async {
+                                    cb: () async {
                                       if (this
                                               ._productContentList[0]
                                               .attr
@@ -184,7 +184,7 @@ class _ProductContentPageState extends State<ProductContentPage> {
                                   child: JdButton(
                                     color: Color.fromRGBO(255, 165, 0, 0.9),
                                     text: "立即购买",
-                                    cd: () {
+                                    cb: () {
                                       if (this
                                               ._productContentList[0]
                                               .attr

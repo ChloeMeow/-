@@ -17,7 +17,7 @@ final routes={
   '/login':(context)=> LoginPage(),
   '/registerfirst':(context)=> RegisterFirstPage(),
   '/registersecond':(context,{arguments})=> RegisterSecondPage(arguments:arguments),
-  '/registerthird':(context)=> RegisterThirdPage(),
+  '/registerthird':(context,{arguments})=> RegisterThirdPage(arguments:arguments),
         //要传入分类ID,通过构造函数给这个类传值
   '/productList':(context,{arguments})=> ProductListPage(arguments:arguments),
   '/productContent':(context,{arguments})=> ProductContentPage(arguments:arguments),

@@ -4,16 +4,16 @@ import 'package:jingdong_app/services/screen_adapter.dart';
 class JdButton extends StatelessWidget {
   final Color color;
   final String text;
-  final Object cd;
+  final Object cb;
   final double height;
   JdButton(
-      {Key key, this.color = Colors.black, this.text = '按钮', this.cd = null,this.height=68})
+      {Key key, this.color = Colors.black, this.text = '按钮', this.cb = null,this.height=68})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: this.cd,
+      onTap: this.cb,
       child: Container(
         margin: EdgeInsets.all(5),
         padding: EdgeInsets.all(5),

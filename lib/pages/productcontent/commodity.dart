@@ -240,7 +240,7 @@ class _CommodityState extends State<Commodity>
                                 child: JdButton(
                                   color: Color.fromRGBO(255, 1, 0, 0.9),
                                   text: "加入购物车",
-                                  cd: () async {
+                                  cb: () async {
                                     //等待数据加入购物车以后再通知其他页面更新数据
                                     // print("加入购物车");
                                     await CartServices.addCart(
@@ -268,7 +268,7 @@ class _CommodityState extends State<Commodity>
                                 child: JdButton(
                                   color: Color.fromRGBO(255, 165, 0, 0.9),
                                   text: "立即购买",
-                                  cd: () {
+                                  cb: () {
                                     print("立即购买");
                                   },
                                 ),

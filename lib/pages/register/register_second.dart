@@ -17,7 +17,7 @@ class RegisterSecondPage extends StatefulWidget {
 }
 
 class _RegisterSecondPageState extends State<RegisterSecondPage> {
-  String tel;
+  String tel ;
   //重新发送开关
   bool setCodeBtn = false;
   //倒计时秒数
@@ -59,7 +59,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
       print(response); //演示期间服务器直接返回 给手机发送的验证码
     } else {
       Fluttertoast.showToast(
-        msg: '${response.data["message"]}',
+        msg: '${response.data['message']}',
         gravity: ToastGravity.CENTER,
         toastLength: Toast.LENGTH_SHORT,
       );
@@ -72,15 +72,17 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
     var api = '${Config.domain}api/validateCode';
     var response = await Dio().post(api, data: {'tel': this.tel,'code': this.code});
     if (response.data['success']) {
-      Navigator.pushNamed(context, '/registerthird');
+      Navigator.pushNamed(context, '/registerthird',arguments:{
+        'tel': this.tel,
+        'code': this.code,
+      });
     }else{
       Fluttertoast.showToast(
-        msg: '${response.data["message"]}',
+        msg: '${response.data['message']}',
         gravity: ToastGravity.CENTER,
         toastLength: Toast.LENGTH_SHORT,
       );
     }
-    
   }
 
   @override
@@ -103,12 +105,15 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
             ),
             Stack(
               children: <Widget>[
-                JdText(
-                  text: '请输入验证码',
-                  onChanged: (value) {
-                    //print(value);
-                    this.code=value;
-                  },
+                Container(
+                  height: ScreenAdapter.height(100),
+                  child: JdText(
+                    text: '请输入验证码',
+                    onChanged: (value) {
+                      //print(value);
+                      this.code=value;
+                    },
+                  ),
                 ),
                 Positioned(
                   right: 0,
@@ -130,7 +135,7 @@ class _RegisterSecondPageState extends State<RegisterSecondPage> {
               height: 78,
               text: '下一步',
               color: Colors.orangeAccent,
-              cd: this.validateCode,
+              cb: this.validateCode,
             ),
           ],
         ),

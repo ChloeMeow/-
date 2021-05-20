@@ -15,7 +15,8 @@ class RegisterFirstPage extends StatefulWidget {
 
 class _RegisterFirstPageState extends State<RegisterFirstPage> {
   //定义手机号
-  String tel;
+  String tel = "";
+  
   sendCode() async {
     //验证手机号是否正确,正则表达式，以1开头后面有10位数字
     RegExp reg = RegExp(r"^1\d{10}$");
@@ -68,7 +69,7 @@ class _RegisterFirstPageState extends State<RegisterFirstPage> {
               height: 78,
               text: '下一步',
               color: Colors.orangeAccent,
-              cd: sendCode,
+              cb: sendCode,
             ),
           ],
         ),
