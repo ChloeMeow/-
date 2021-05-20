@@ -6,8 +6,12 @@ class UserServices {
   static getUserInfo() async {
     List userinfo;
     try {
-      List userInfoData = json.decode(await Storage.getString('userInfo'));
-      userinfo = userInfoData;
+      if (){
+
+      }else{
+        List userInfoData = json.decode(await Storage.getString('userInfo'));
+        userinfo = userInfoData;
+      }
     } catch (e) {
       userinfo = [];
     }
@@ -16,7 +20,7 @@ class UserServices {
 
   static getUserLoginState() async {
     var userInfo = await UserServices.getUserInfo();
-    if (userInfo.length > 0 && userInfo[0]["username"] != "") {
+    if (userInfo.length  > 0 && userInfo[0]['username'] != "") {
       return true;
     }
     return false;

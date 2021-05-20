@@ -54,7 +54,7 @@ class _RegisterThirdPageState extends State<RegisterThirdPage> {
       });
       if (response.data['success']) {
         //保存用户信息，返回根
-        Storage.setString('userInfo', json.encode(response.data['userInfo']));
+        Storage.setString('userInfo', json.encode(response.data['userinfo']));
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => Tabs()),
             (route) => route == null);

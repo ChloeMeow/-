@@ -13,9 +13,8 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-
-  bool isLogin=false;
-  List userInfo=[];
+  bool isLogin = false;
+  List userInfo = [];
 
   @override
   void initState() {
@@ -24,17 +23,16 @@ class _UserPageState extends State<UserPage> {
     this._getUserinfo();
   }
 
-  _getUserinfo() async{
+  _getUserinfo() async {
+    var isLogin = await UserServices.getUserLoginState();
+    var userInfo = await UserServices.getUserInfo();
 
-      var isLogin=await UserServices.getUserLoginState();      
-      var userInfo=await UserServices.getUserInfo();
-
-      setState(() {          
-        this.userInfo=userInfo;
-        this.isLogin=isLogin;
-      });
-
+    setState(() {
+      this.userInfo = userInfo;
+      this.isLogin = isLogin;
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,45 +46,49 @@ class _UserPageState extends State<UserPage> {
           width: double.infinity,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('images/user_bg.jpg'), fit: BoxFit.cover)),
+                  image: AssetImage('assets/images/user_bg.png'),
+                  fit: BoxFit.cover)),
           child: Row(
             children: <Widget>[
               Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ClipOval(
                   child: Image.asset(
-                    'images/user.png',
+                    'assets/images/user.jpg',
                     fit: BoxFit.cover,
                     width: ScreenAdapter.width(100),
                     height: ScreenAdapter.width(100),
                   ),
                 ),
               ),
-              !this.isLogin?Expanded(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  child: Text("登录/注册", style: TextStyle(color: Colors.white)),
-                ),
-              ):Expanded(
-                flex: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("用户名：${this.userInfo[0]["username"]}",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: ScreenAdapter.sp(32))),
-                    Text("普通会员",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: ScreenAdapter.sp(24))),
-                  ],
-                ),
-              )
+              !this.isLogin
+                  ? Expanded(
+                      flex: 1,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/login');
+                        },
+                        child: Text("登录/注册",
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    )
+                  : Expanded(
+                      flex: 1,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text("用户名：${this.userInfo[0]["username"]}",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenAdapter.sp(32))),
+                          Text("普通会员",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenAdapter.sp(24))),
+                        ],
+                      ),
+                    )
             ],
           ),
         ),
@@ -118,15 +120,11 @@ class _UserPageState extends State<UserPage> {
           title: Text("在线客服"),
         ),
         Divider(),
-
-
         JdButton(
           text: "退出登录",
-          cb: (){
-
+          cb: () {
             UserServices.loginOut();
             this._getUserinfo();
-            
           },
         )
       ],
