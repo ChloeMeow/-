@@ -8,6 +8,7 @@ class UserServices {
     try {
       List userInfoData = json.decode(await Storage.getString('userInfo'));
       
+      //判断userInfoData是否List
       if (!(userInfoData is List)){
         userInfoData = [];
       }

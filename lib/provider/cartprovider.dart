@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jingdong_app/services/storage.dart';
 
 class CartProvider with ChangeNotifier {
-  List _cartList = []; //公务车数据
+  List _cartList = []; //购物车数据
   bool _isCheckedAll = false; //全选
   //int _cartNum = 0;
   double _allPrice = 0; //总价
@@ -127,4 +127,6 @@ class CartProvider with ChangeNotifier {
     Storage.setString('cartList', json.encode(this._cartList));
     notifyListeners();
   }
+
+
 }

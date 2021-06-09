@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jingdong_app/provider/counter.dart';
+import 'package:jingdong_app/services/eventbus.dart';
 import 'package:jingdong_app/services/screen_adapter.dart';
 import 'package:jingdong_app/services/user_services.dart';
 import 'package:jingdong_app/widget/jdbutton.dart';
@@ -21,6 +22,12 @@ class _UserPageState extends State<UserPage> {
     // TODO: implement initState
     super.initState();
     this._getUserinfo();
+    //监听登录页面改变的事件
+    eventBus.on<UserEvent>().listen((event) {
+      print(event.str);
+      //重新获取登录信息
+      this._getUserinfo();
+    });
   }
 
   _getUserinfo() async {
@@ -120,13 +127,18 @@ class _UserPageState extends State<UserPage> {
           title: Text("在线客服"),
         ),
         Divider(),
-        JdButton(
-          text: "退出登录",
-          cb: () {
-            UserServices.loginOut();
-            this._getUserinfo();
-          },
-        )
+       
+        this.isLogin?Container(
+          padding: EdgeInsets.fromLTRB(20, 80, 20, 0),
+          child: JdButton(
+            color: Colors.orangeAccent,
+            text: "退出登录",
+            cb: () {
+              UserServices.loginOut();
+              this._getUserinfo();
+            },
+          ),
+        ):Text(''),
       ],
     ));
   }

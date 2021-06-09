@@ -1,17 +1,18 @@
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jingdong_app/pages/tabs/tabs.dart';
 import 'package:jingdong_app/provider/cartprovider.dart';
+import 'package:jingdong_app/provider/checkoutprovider.dart';
+
 import 'package:jingdong_app/provider/counter.dart';
 import 'package:jingdong_app/routers/router.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   if (Platform.isAndroid) {
+  if (Platform.isAndroid) {
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
@@ -31,7 +32,8 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         //ChangeNotifierProvider(create: (_)=>Counter()),
-         ChangeNotifierProvider(create: (_)=>CartProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => CheckOutProvider()),
       ],
       child: ScreenUtilInit(
         designSize: Size(750, 1334),
@@ -39,7 +41,7 @@ class _MyAppState extends State<MyApp> {
         builder: () => MaterialApp(
           debugShowCheckedModeBanner: false,
           //home: Tabs(),
-          initialRoute: '/login',
+          initialRoute: '/',
           onGenerateRoute: onGenerateRoute,
           theme: ThemeData(
             primaryColor: Colors.white,

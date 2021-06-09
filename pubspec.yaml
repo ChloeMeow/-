@@ -36,6 +36,8 @@ dependencies:
   provider:
   event_bus:
   fluttertoast:
+  city_pickers:
+  crypto:
 
 dev_dependencies:
   flutter_test:

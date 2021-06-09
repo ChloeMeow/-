@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jingdong_app/pages/address/address_add.dart';
+import 'package:jingdong_app/pages/address/address_edit.dart';
+import 'package:jingdong_app/pages/address/address_list.dart';
+import 'package:jingdong_app/pages/checkout.dart';
 import 'package:jingdong_app/pages/login.dart';
 import 'package:jingdong_app/pages/product_content.dart';
 import 'package:jingdong_app/pages/product_list.dart';
@@ -16,11 +20,15 @@ final routes={
   '/cart':(context)=> CartPage(),
   '/login':(context)=> LoginPage(),
   '/registerfirst':(context)=> RegisterFirstPage(),
+  '/checkout':(context)=> CheckOutPage(),
   '/registersecond':(context,{arguments})=> RegisterSecondPage(arguments:arguments),
   '/registerthird':(context,{arguments})=> RegisterThirdPage(arguments:arguments),
         //要传入分类ID,通过构造函数给这个类传值
   '/productList':(context,{arguments})=> ProductListPage(arguments:arguments),
   '/productContent':(context,{arguments})=> ProductContentPage(arguments:arguments),
+  '/addressAdd':(context)=> AddressAddPage(),
+  '/addressEdit':(context)=> AddressEditPage(),
+  '/addressList':(context)=> AddressListPage(),
 };
 //固定写法 
 var onGenerateRoute=(RouteSettings settings) { 

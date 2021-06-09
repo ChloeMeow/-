@@ -8,6 +8,7 @@ import 'package:jingdong_app/model/focusmodel.dart';
 import 'package:jingdong_app/model/productmodel.dart';
 import 'package:jingdong_app/services/screen_adapter.dart';
 import 'package:jingdong_app/services/search_services.dart';
+import 'package:jingdong_app/services/sign_services.dart';
 import 'dart:convert';
 
 import 'package:jingdong_app/widget/loadingwidget.dart';
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage>
     _getFocusData();
     _getHotProductData();
     _getBestProductData();
+    //SignServices.getSign();
 
     //  // var mapData = {"name": "张三", "age": "20"}; //Json 字符串转化成 Map 类型
     //   var strData = '{"name":"张三","age":"20"}';
@@ -271,7 +273,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(
         leading: IconButton(
           icon: Icon(
             Icons.center_focus_weak,
