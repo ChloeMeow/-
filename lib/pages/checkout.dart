@@ -1,6 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jingdong_app/config/config.dart';
 import 'package:jingdong_app/provider/checkoutprovider.dart';
 import 'package:jingdong_app/services/screen_adapter.dart';
+import 'package:jingdong_app/services/sign_services.dart';
+import 'package:jingdong_app/services/user_services.dart';
 import 'package:provider/provider.dart';
 
 class CheckOutPage extends StatefulWidget {
@@ -11,6 +15,34 @@ class CheckOutPage extends StatefulWidget {
 }
 
 class _CheckOutPageState extends State<CheckOutPage> {
+  List addressList = [];
+  @override
+  void initState() {
+    super.initState();
+    this._getDefaultAddress();
+  }
+
+  //获取用户收货地址
+  _getDefaultAddress() async {
+    List userinfo = await UserServices.getUserInfo();
+    print(userinfo);
+    var tempJson = {
+      //需要签名字段
+      'uid': userinfo[0]['_id'],
+      'salt': userinfo[0]['salt'],
+    };
+    var sign = SignServices.getSign(tempJson);
+    print(sign);
+    var api =
+        '${Config.domain}api/oneAddressList?uid=${userinfo[0]['_id']}&sign=${sign}';
+    var response = await Dio().get(api);
+    print(response);
+    //异步方法所以要赋值
+    setState(() {
+      this.addressList = response.data["result"];
+    });
+  }
+
   Widget _checkOutItem(item) {
     return Row(
       children: <Widget>[
@@ -77,25 +109,29 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    ListTile(
-                        leading: Icon(Icons.add_location),
-                        title: Center(child: Text('请添加收货地址')),
-                        trailing: Icon(Icons.navigate_next),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/addressList');
-                        }),
-                    // ListTile(
-                    //   title: Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       children: <Widget>[
-                    //         Text('1111'),
-                    //         SizedBox(
-                    //           height: ScreenAdapter.height(18),
-                    //         ),
-                    //         Text('2222'),
-                    //       ]),
-                    //   trailing: Icon(Icons.navigate_next),
-                    // ),
+                    this.addressList.length > 0
+                        ? ListTile(
+                            title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                      '${this.addressList[0]['name']} ${this.addressList[0]['name']}'),
+                                  SizedBox(
+                                    height: ScreenAdapter.height(18),
+                                  ),
+                                  Text('${this.addressList[0]['address']}'),
+                                ]),
+                            trailing: Icon(Icons.navigate_next),
+                            onTap: () {
+                              Navigator.pushNamed(context, '/addressList');
+                            })
+                        : ListTile(
+                            leading: Icon(Icons.add_location),
+                            title: Center(child: Text('请添加收货地址')),
+                            trailing: Icon(Icons.navigate_next),
+                            onTap: () {
+                              Navigator.pushNamed(context, '/addressList');
+                            }),
                   ],
                 ),
               ),

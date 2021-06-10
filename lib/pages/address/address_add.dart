@@ -38,15 +38,18 @@ class _AddressAddPageState extends State<AddressAddPage> {
       body: Container(
         padding: EdgeInsets.all(ScreenAdapter.width(10)),
         child: ListView(children: <Widget>[
+          SizedBox(height: ScreenAdapter.height(20)),
           JdText(
             text: '收货人姓名',
+            maxLength: 6,
             onChanged: (value) {
               this.name = value;
             },
           ),
-          SizedBox(height: ScreenAdapter.height(10)),
+          SizedBox(height: ScreenAdapter.height(20)),
           JdText(
               text: '收货人电话',
+              maxLength: 11,
               onChanged: (value) {
                 this.phone = value;
               }),
@@ -76,7 +79,7 @@ class _AddressAddPageState extends State<AddressAddPage> {
                   print(result);
                   setState(() {
                     this.area =
-                        '${result.provinceName}/${result.cityName}/${result.areaName}';
+                        "${result.provinceName}/${result.cityName}/${result.areaName}";
                   });
                 },
                 child: Row(children: <Widget>[
@@ -96,7 +99,7 @@ class _AddressAddPageState extends State<AddressAddPage> {
           JdText(
             text: '详细地址',
             onChanged: (value) {
-              this.address = '${this.area}${value}';
+              this.address = '${this.area} ${value}}';
             },
             maxLength: 4,
             height: 200,

@@ -27,8 +27,8 @@ class JdText extends StatelessWidget {
           obscureText: this.password,
           autofocus: false,
           decoration: InputDecoration(
-              labelText: this.text,
-              labelStyle: TextStyle(
+              hintText: this.text,
+              hintStyle: TextStyle(
                 fontSize: ScreenAdapter.sp(32),
                 color: Colors.black38,
               ),

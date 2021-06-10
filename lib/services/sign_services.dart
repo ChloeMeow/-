@@ -10,7 +10,7 @@ class SignServices {
     //   'salt': 'xxxxxxx' //私钥
     // };
     //var attrKeys = addressListAttr.keys.toList();
-    var attrKeys = json.keys.toList();
+    List attrKeys = json.keys.toList();
     attrKeys.sort(); //排序 ASCII字符顺序进行升序排列
 
     print(attrKeys);
