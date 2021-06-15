@@ -68,6 +68,7 @@ class _AddressAddPageState extends State<AddressAddPage> {
                 onTap: () async {
                   Result result = await CityPickers.showCityPicker(
                     context: context,
+                    locationCode: '110100',
                     cancelWidget: Text('取消',
                         style: TextStyle(
                           color: Colors.blue,

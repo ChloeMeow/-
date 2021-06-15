@@ -7,7 +7,16 @@ class JdText extends StatelessWidget {
   final Object onChanged;
   final int maxLength;
   final double height;
-  JdText({Key key, this.text = '输入内容', this.password = false,this.onChanged =null,this.maxLength =1,this.height =68})
+  final TextEditingController controller;
+  JdText(
+      {Key key,
+      this.text = '输入内容',
+      this.password = false,
+      this.onChanged = null,
+      this.maxLength = 1,
+      this.height = 68,
+      this.controller = null,
+      })
       : super(key: key);
 
   @override
@@ -15,14 +24,13 @@ class JdText extends StatelessWidget {
     return Container(
         height: ScreenAdapter.height(this.height),
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1, 
-              color: Colors.black12,
-            )
-          )
-        ),
+            border: Border(
+                bottom: BorderSide(
+          width: 1,
+          color: Colors.black12,
+        ))),
         child: TextField(
+          controller: controller,
           maxLength: this.maxLength,
           obscureText: this.password,
           autofocus: false,

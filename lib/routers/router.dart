@@ -27,7 +27,7 @@ final routes={
   '/productList':(context,{arguments})=> ProductListPage(arguments:arguments),
   '/productContent':(context,{arguments})=> ProductContentPage(arguments:arguments),
   '/addressAdd':(context)=> AddressAddPage(),
-  '/addressEdit':(context)=> AddressEditPage(),
+  '/addressEdit':(context,{arguments})=> AddressEditPage(arguments:arguments),
   '/addressList':(context)=> AddressListPage(),
 };
 //固定写法 
