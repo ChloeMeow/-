@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jingdong_app/config/config.dart';
 import 'package:jingdong_app/provider/checkoutprovider.dart';
+import 'package:jingdong_app/services/eventbus.dart';
 import 'package:jingdong_app/services/screen_adapter.dart';
 import 'package:jingdong_app/services/sign_services.dart';
 import 'package:jingdong_app/services/user_services.dart';
@@ -20,7 +21,15 @@ class _CheckOutPageState extends State<CheckOutPage> {
   void initState() {
     super.initState();
     this._getDefaultAddress();
+
+    //监听增加收货地址的广播
+    eventBus.on<CheckOutEvent>().listen((event) {
+      print(event.str);
+      this._getDefaultAddress();
+    });
   }
+
+  
 
   //获取用户收货地址
   _getDefaultAddress() async {
@@ -79,7 +88,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       ),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: Text('X${item['num']}'),
+                        child: Text('X${item['count']}'),
                       )
                     ])
                   ]),
@@ -115,7 +124,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                      '${this.addressList[0]['name']} ${this.addressList[0]['name']}'),
+                                      '${this.addressList[0]['name']} ${this.addressList[0]['phone']}'),
                                   SizedBox(
                                     height: ScreenAdapter.height(18),
                                   ),
@@ -130,7 +139,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             title: Center(child: Text('请添加收货地址')),
                             trailing: Icon(Icons.navigate_next),
                             onTap: () {
-                              Navigator.pushNamed(context, '/addressList');
+                              Navigator.pushNamed(context, '/addressAdd');
                             }),
                   ],
                 ),

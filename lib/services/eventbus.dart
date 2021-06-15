@@ -19,10 +19,18 @@ class UserEvent{
   }
 }
 
-//地址页面广播
+//收货地址页面广播
 class AddressEvent{
   String str;
   AddressEvent(String str){
+    this.str = str;
+  }
+}
+
+//结算页面广播
+class CheckOutEvent{
+  String str;
+  CheckOutEvent(String str){
     this.str = str;
   }
 }

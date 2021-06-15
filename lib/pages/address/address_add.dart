@@ -27,6 +27,7 @@ class _AddressAddPageState extends State<AddressAddPage> {
   dispose() {
     super.dispose();
     eventBus.fire(AddressEvent('增加成功……'));
+    eventBus.fire(CheckOutEvent('修改收货地址成功'));
   }
 
   @override
