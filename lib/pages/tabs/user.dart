@@ -100,9 +100,11 @@ class _UserPageState extends State<UserPage> {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.assignment, color: Colors.red),
-          title: Text("全部订单"),
-        ),
+            leading: Icon(Icons.assignment, color: Colors.red),
+            title: Text("全部订单"),
+            onTap: () {
+              Navigator.pushNamed(context, '/order');
+            }),
         Divider(),
         ListTile(
           leading: Icon(Icons.payment, color: Colors.green),
@@ -127,18 +129,19 @@ class _UserPageState extends State<UserPage> {
           title: Text("在线客服"),
         ),
         Divider(),
-       
-        this.isLogin?Container(
-          padding: EdgeInsets.fromLTRB(20, 80, 20, 0),
-          child: JdButton(
-            color: Colors.orangeAccent,
-            text: "退出登录",
-            cb: () {
-              UserServices.loginOut();
-              this._getUserinfo();
-            },
-          ),
-        ):Text(''),
+        this.isLogin
+            ? Container(
+                padding: EdgeInsets.fromLTRB(20, 80, 20, 0),
+                child: JdButton(
+                  color: Colors.orangeAccent,
+                  text: "退出登录",
+                  cb: () {
+                    UserServices.loginOut();
+                    this._getUserinfo();
+                  },
+                ),
+              )
+            : Text(''),
       ],
     ));
   }
